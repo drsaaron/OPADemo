@@ -4,8 +4,6 @@
  */
 package com.blazartech.dataapidemo.data;
 
-import com.blazartech.dataapidemo.data.EarningsDataDALImpl;
-import com.blazartech.dataapidemo.data.EarningsFailure;
 import com.blazartech.dataapidemo.security.EntitledRelationship;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,9 +12,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
-import static org.junit.Assert.*;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
