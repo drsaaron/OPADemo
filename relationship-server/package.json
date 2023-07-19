@@ -1,0 +1,15 @@
+{
+  "name": "relationship-server",
+  "version": "1.0.3",
+  "description": "a really simple server for relatoinship data used by opa",
+  "main": "index.js",
+  "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "NODE_ENV=development node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
