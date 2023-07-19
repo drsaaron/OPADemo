@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
  */
-package com.blazartech.minimumearningsapidemo.data;
+package com.blazartech.dataapidemo.data;
 
 import com.blazartech.dataapidemo.data.EarningsDataDALImpl;
 import com.blazartech.dataapidemo.data.EarningsFailure;
@@ -44,7 +44,7 @@ public class EaringsDataDALImplTest {
     }
 
     @TestConfiguration
-    public static class MinimumEarningsDataDALImplTestConfiguration {
+    public static class EarningsDataDALImplTestConfiguration {
         
         @Bean
         public EarningsDataDALImpl instance() {
@@ -91,7 +91,7 @@ public class EaringsDataDALImplTest {
     }
 
     /**
-     * Test of getFailures method, of class MinimumEarningsDataDALImpl.
+     * Test of getFailures method, of class EarningsDataDALImpl.
      */
     @Test
     public void testGetFailures() {
