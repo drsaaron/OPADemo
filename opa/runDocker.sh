@@ -4,24 +4,6 @@ ipfilter=netmask
 buildfor="remote"
 filtercomm=tail
 
-while getopts :hr OPTION
-do
-    case $OPTION in
-	h)
-	    homeoffice=y
-	    ipfilter=broadcast
-	    buildfor="home office"
-	    filtercomm=head
-	    ;;
-	r)
-	    remote=y
-	    ;;
-	*)
-	    echo "invalid option $OPTARG" 1>&2
-	    exit 1
-    esac
-done
-
 rego=earnings.rego
 
 imageName=openpolicyagent/opa:latest-envoy-rootless
