@@ -1,6 +1,6 @@
 {
   "name": "relationship-server",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "a really simple server for relatoinship data used by opa",
   "main": "index.js",
   "scripts": {
