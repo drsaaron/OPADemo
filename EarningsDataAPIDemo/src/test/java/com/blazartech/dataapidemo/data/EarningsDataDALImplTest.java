@@ -11,10 +11,12 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeAll;
@@ -32,7 +34,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  */
 @ExtendWith(SpringExtension.class)
 @Slf4j
-public class EaringsDataDALImplTest {
+public class EarningsDataDALImplTest {
     
     private static Date parseDate(String dateString) {
         try {
@@ -58,7 +60,8 @@ public class EaringsDataDALImplTest {
                     new EntitledRelationship(1001, parseDate("2023-04-01"), null, "", ""),
                     new EntitledRelationship(1002, parseDate("2023-04-01"), null, "", ""),
                     new EntitledRelationship(1003, parseDate("2023-04-01"), null, "", ""),
-                    new EntitledRelationship(1004, parseDate("2023-04-01"), null, "", "")
+                    new EntitledRelationship(1004, parseDate("2023-04-01"), null, "", ""),
+                    new EntitledRelationship(1005, parseDate("2022-01-01"), parseDate("2024-12-31"), "", "")
             );
             
             return relationships;
@@ -71,7 +74,7 @@ public class EaringsDataDALImplTest {
     @Autowired
     private List<EntitledRelationship> entitledRelationships;
     
-    public EaringsDataDALImplTest() {
+    public EarningsDataDALImplTest() {
     }
     
     @BeforeAll
@@ -115,5 +118,28 @@ public class EaringsDataDALImplTest {
         Optional<EarningsFailure> result = instance.getFailure(1001, entitledRelationships);
         assertTrue(result.isPresent());
         assertEquals(1001, result.get().getLegalEntityID());
+    }
+    
+    @Test
+    public void testGetEntitledRelationshipFilter() {
+        log.info("getEntitledRelationshipFilter");
+        
+        Predicate<EarningsFailure> filter = instance.getEntitledRelationshipFilter(entitledRelationships);
+        
+        EarningsFailure failure1 = new EarningsFailure(1000, "1", 0, parseDate("2021-01-01'"));
+        boolean result1 = filter.test(failure1);
+        assertFalse(result1);
+        
+        EarningsFailure failure2 = new EarningsFailure(1000, "1", 0, parseDate("2025-01-01"));
+        boolean result2 = filter.test(failure2);
+        assertTrue(result2);
+        
+        EarningsFailure failure3 = new EarningsFailure(1005, "1", 0, parseDate("2025-01-01"));
+        boolean result3 = filter.test(failure3);
+        assertFalse(result3);
+        
+        EarningsFailure failure4 = new EarningsFailure(1005, "1", 0, parseDate("2024-12-31"));
+        boolean result4 = filter.test(failure4);
+        assertTrue(result4);
     }
 }

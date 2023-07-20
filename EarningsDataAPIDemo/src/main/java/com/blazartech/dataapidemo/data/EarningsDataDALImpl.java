@@ -44,17 +44,21 @@ public class EarningsDataDALImpl implements EarningsDataDAL {
             new EarningsFailure(1003, "001", 1, parseDate("2022-04-01"))
     );
     
-    @Override
-    public Collection<EarningsFailure> getFailures(List<EntitledRelationship> entitledRelationships) {
-        log.info("getting all failures");
-        log.info("filtered IDs = " + entitledRelationships);
-        
-        Predicate<EarningsFailure> filterCheck = f -> {
+    public Predicate<EarningsFailure> getEntitledRelationshipFilter(List<EntitledRelationship> entitledRelationships) {
+        return f -> {
             return entitledRelationships.stream()
                     .anyMatch(r -> f.getLegalEntityID() == r.getLegalEntityID()
                             && ((r.getStartDate().compareTo(f.getEffectiveDate()) <= 0) 
                                     && (r.getEndDate() == null || r.getEndDate().compareTo(f.getEffectiveDate()) >= 0)));
         };
+    }
+    
+    @Override
+    public Collection<EarningsFailure> getFailures(List<EntitledRelationship> entitledRelationships) {
+        log.info("getting all failures");
+        log.info("filtered IDs = " + entitledRelationships);
+        
+        Predicate<EarningsFailure> filterCheck = getEntitledRelationshipFilter(entitledRelationships);
         
         return DATA.stream()
                 .filter(filterCheck)
