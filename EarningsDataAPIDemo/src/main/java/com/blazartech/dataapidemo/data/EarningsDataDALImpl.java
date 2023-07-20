@@ -49,8 +49,8 @@ public class EarningsDataDALImpl implements EarningsDataDAL {
             Predicate<EntitledRelationship> legalEntityMatch = r -> f.getLegalEntityID() == r.getLegalEntityID();
             Predicate<EntitledRelationship> startDateCheck = r -> r.getStartDate().compareTo(f.getEffectiveDate()) <= 0;
             Predicate<EntitledRelationship> endDateNullCheck = r -> r.getEndDate() == null;
-            Predicate<EntitledRelationship> endDateBetweenCheck = r -> r.getEndDate().compareTo(f.getEffectiveDate()) >= 0;
-            Predicate<EntitledRelationship> endDateCheck = endDateNullCheck.or(endDateBetweenCheck);
+            Predicate<EntitledRelationship> endDateAfterCheck = r -> r.getEndDate().compareTo(f.getEffectiveDate()) >= 0;
+            Predicate<EntitledRelationship> endDateCheck = endDateNullCheck.or(endDateAfterCheck);
             Predicate<EntitledRelationship> dateCheck = startDateCheck.and(endDateCheck);
             
             return entitledRelationships.stream().anyMatch(legalEntityMatch.and(dateCheck));
