@@ -28,14 +28,12 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests()
-                .requestMatchers(request -> request.getRequestURI().startsWith("/failures"))
-                .access(opaManager)
-                .requestMatchers(request -> request.getRequestURI().startsWith("/monitoring") || request.getRequestURI().startsWith("/v3/api-docs"))
-                .permitAll()
+        http.authorizeHttpRequests(authz -> authz
+                .requestMatchers(request -> request.getRequestURI().startsWith("/failures")).access(opaManager)
+                .requestMatchers(request -> request.getRequestURI().startsWith("/monitoring") || request.getRequestURI().startsWith("/v3/api-docs")).permitAll()
                 .requestMatchers(request -> request.getRequestURI().startsWith("/v3/api-docs")).permitAll()
-                .requestMatchers("/swagger-ui.html", "/swagger-ui/**").permitAll();
-
+                .requestMatchers("/swagger-ui.html", "/swagger-ui/**").permitAll()
+        );
         return http.build();
 
     }
