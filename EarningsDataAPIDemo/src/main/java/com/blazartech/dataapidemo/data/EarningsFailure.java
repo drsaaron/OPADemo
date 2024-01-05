@@ -4,7 +4,7 @@
  */
 package com.blazartech.dataapidemo.data;
 
-import java.util.Date;
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,5 +21,5 @@ public class EarningsFailure {
     private int legalEntityID;
     private String officeNumber;
     private int failureCount;
-    private Date effectiveDate;
+    private LocalDate effectiveDate;
 }

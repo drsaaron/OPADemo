@@ -36,7 +36,8 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
     @Value("${opa.url}")
     private String opaUrl;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Autowired
     private OpaHttpClient opaClient;

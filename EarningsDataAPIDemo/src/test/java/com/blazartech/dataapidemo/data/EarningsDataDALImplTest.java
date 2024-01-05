@@ -5,10 +5,8 @@
 package com.blazartech.dataapidemo.data;
 
 import com.blazartech.dataapidemo.security.EntitledRelationship;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -36,13 +34,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @Slf4j
 public class EarningsDataDALImplTest {
     
-    private static Date parseDate(String dateString) {
-        try {
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            return df.parse(dateString);
-        } catch(ParseException e) {
-            throw new RuntimeException("error parsing date: " + e.getMessage(), e);
-        }
+    private static LocalDate parseDate(String dateString) {
+        return LocalDate.parse(dateString);
     }
 
     @TestConfiguration
@@ -126,7 +119,7 @@ public class EarningsDataDALImplTest {
         
         Predicate<EarningsFailure> filter = instance.getEntitledRelationshipFilter(entitledRelationships);
         
-        EarningsFailure failure1 = new EarningsFailure(1000, "1", 0, parseDate("2021-01-01'"));
+        EarningsFailure failure1 = new EarningsFailure(1000, "1", 0, parseDate("2021-01-01"));
         boolean result1 = filter.test(failure1);
         assertFalse(result1);
         

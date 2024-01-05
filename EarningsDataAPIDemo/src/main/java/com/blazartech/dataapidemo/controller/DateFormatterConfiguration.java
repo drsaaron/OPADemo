@@ -6,6 +6,7 @@ package com.blazartech.dataapidemo.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.text.SimpleDateFormat;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +27,7 @@ public class DateFormatterConfiguration {
                 .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
                 .build();
         mapper.setDateFormat(new SimpleDateFormat(DATE_FORMAT));
+        mapper.registerModule(new JavaTimeModule());
         return mapper;
     }
 }

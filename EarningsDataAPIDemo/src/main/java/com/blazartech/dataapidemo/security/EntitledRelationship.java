@@ -4,7 +4,7 @@
  */
 package com.blazartech.dataapidemo.security;
 
-import java.util.Date;
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -20,8 +20,8 @@ public class EntitledRelationship {
     }
 
     private int legalEntityID;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String entitleableFunction;
     private String manager;
 }

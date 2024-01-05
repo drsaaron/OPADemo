@@ -7,9 +7,9 @@ package com.blazartech.dataapidemo.data;
 import com.blazartech.dataapidemo.security.EntitledRelationship;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -25,13 +25,8 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class EarningsDataDALImpl implements EarningsDataDAL {
     
-    private static Date parseDate(String dateString) {
-        try {
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            return df.parse(dateString);
-        } catch(ParseException e) {
-            throw new RuntimeException("error parsing date: " + e.getMessage(), e);
-        }
+    private static LocalDate parseDate(String dateString) {
+        return LocalDate.parse(dateString);
     }
     
     private static final List<EarningsFailure> DATA = Arrays.asList(
