@@ -2,6 +2,12 @@
 
 token=$(getBlazarToken.sh -u joe)
 
+if [ -z "$token" ]
+then
+    echo "unable to get token! Did you start the service?" 1>&2
+    exit 1
+fi
+
 # call for all failures as an office user.  This user has access to 2 failures in 2023 and 1 failure
 # in 2022.  So this call should return 3 failures.
 echo "calling for all failures...."
