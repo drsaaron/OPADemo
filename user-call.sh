@@ -18,6 +18,12 @@ echo
 echo "calling for failure on 1001..."
 curl -H "Authorization: Bearer $token"  http://localhost:25000/failures/1001
 
+# make an unauthorized call
 echo
+echo "call for unauthorized..."
+curl -v -H "Authorization: Bearer $token" http://localhost:25000/failures/1002 2>&1 | grep HTTP
+
+echo
+
 
 
