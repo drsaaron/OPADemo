@@ -94,6 +94,9 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
                     
                     // save the list of entitled relationships to the request session for use in DAL
                     object.getRequest().getSession().setAttribute("filteredList", filterList);
+                } catch (IllegalArgumentException e) {
+                    // this means no filter list, but authorized if we've gotten here, so tolerate
+                    log.info("authorized user with no filters, presumably an application");
                 } catch (IOException e) {
                     log.error("Error building list for filtering: " + e.getMessage(), e);
                     return new AuthorizationDecision(false);
