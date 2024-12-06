@@ -5,8 +5,6 @@
 package com.blazartech.dataapidemo.data;
 
 import com.blazartech.dataapidemo.security.EntitledRelationship;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
