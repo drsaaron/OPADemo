@@ -1,7 +1,6 @@
 package demo.earnings
 
 default allow := false
-default filter_list := [ { "legalEntityID": -1, "manager": "application" } ]
 
 # request is allowed if the requestor is
 #   a. an application rather than a user OR
@@ -36,13 +35,9 @@ decodedJwtToken := io.jwt.decode(jwtToken)
 roles := decodedJwtToken[1].roles
 method := input.method
 
-# is the caller an application.  For now just check that the JWT token is null since the
-# real world would not yet have secured user identification.  eventually I would assume there
-# would be a JWT token for the caller that would include claims or something that would allow
-# differentiation of a generic ID from a user ID, though we probably wouldn't need to if the
-# generic ID is in the expected group like a home office user would be.
+# is the caller an application. the user will have group ROLE_EARNINGS_DEMO_APPLICATION
 caller_is_application {
-    jwtToken == null
+    roles[_] == "ROLE_EARNINGS_DEMO_APPLICATION"
 }
 
 # is the caller home office? if yes, the user will have the group ROLE_EARNINGS_DEMO_USER in the roles
