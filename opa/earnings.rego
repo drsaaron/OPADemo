@@ -1,6 +1,7 @@
 package demo.earnings
 
 default allow := false
+default filter_list := [ { "legalEntityID": -1, "manager": "application" } ]
 
 # request is allowed if the requestor is
 #   a. an application rather than a user OR

@@ -9,11 +9,11 @@ fi
 
 # call for all failures as an HO user
 echo "getting all failures...."
-curl -H "Authorization: Bearer $token"  http://localhost:25000/failures
+curl -H "Authorization: Bearer $token"  http://localhost:25000/failures 2>/dev/null | jq
 
-# get a specif failure
+# get a specific failure
 echo
 echo "getting failure for 1001..."
-curl -H "Authorization: Bearer $token"  http://localhost:25000/failures/1001
+curl -H "Authorization: Bearer $token"  http://localhost:25000/failures/1001 2>/dev/null | jq
 
 echo

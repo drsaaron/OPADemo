@@ -41,7 +41,7 @@ public class EarningsDataDALImpl implements EarningsDataDAL {
     
     public Predicate<EarningsFailure> getEntitledRelationshipFilter(List<EntitledRelationship> entitledRelationships) {
         return f -> {
-            if (entitledRelationships == null) {
+            if (entitledRelationships.size() == 1 && entitledRelationships.getFirst().getLegalEntityID() == -1 && entitledRelationships.getFirst().getManager().equals("application")) {
                 // authorized caller but no filter/entitled relationships so just return all data
                 return true;
             }
