@@ -5,6 +5,6 @@ ADD relationshipServer.py ./relationshipServer.py
 
 EXPOSE 25001
 
-RUN pip3 install fastapi pydantic uvicorn 
+RUN pip3 install -r requirements.txt # fastapi pydantic uvicorn 
 
 CMD "./relationshipServer.py"
