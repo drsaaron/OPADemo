@@ -9,16 +9,16 @@ import uvicorn
 import json
 
 RELATIONSHIP_DATA = [
-    { 'manager': 'joe', 'legalEntityID': 1000, 'entitleableFunction': 'MinimumEarnings', "startDate": "2023-01-01", "endDate": None },
-    { 'manager': 'joe', 'legalEntityID': 1001, 'entitleableFunction': 'MinimumEarnings', "startDate": "2023-01-01", "endDate": None },
-    { 'manager': 'henrietta', 'legalEntityID': 1002, 'entitleableFunction': 'MinimumEarnings', "startDate": "2023-01-01", "endDate": None },
-    { 'manager': 'paula', 'legalEntityID': 1003, 'entitleableFunction': 'MinimumEarnings', "startDate": "2023-01-01", "endDate": None },
-    { 'manager': 'scott', 'legalEntityID': 1004, 'entitleableFunction': 'MinimumEarnings', "startDate": "2023-01-01", "endDate": None },
+    { 'manager': 'joe', 'legalEntityID': 1000, 'entitleableFunction': 'EarningsDemo', "startDate": "2023-01-01", "endDate": None },
+    { 'manager': 'joe', 'legalEntityID': 1001, 'entitleableFunction': 'EarningsDemo', "startDate": "2023-01-01", "endDate": None },
+    { 'manager': 'henrietta', 'legalEntityID': 1002, 'entitleableFunction': 'EarningsDemo', "startDate": "2023-01-01", "endDate": None },
+    { 'manager': 'paula', 'legalEntityID': 1003, 'entitleableFunction': 'EarningsDemo', "startDate": "2023-01-01", "endDate": None },
+    { 'manager': 'scott', 'legalEntityID': 1004, 'entitleableFunction': 'EarningsDemo', "startDate": "2023-01-01", "endDate": None },
     { 'manager': 'joe', 'legalEntityID': 1003, 'entitleableFunction': 'PreDistribution', "startDate": "2023-01-01", "endDate": None },
 
     # give a previous year relationship to demonstrate time dependence
-    { 'manager': 'paula', 'legalEntityID': 1001, 'entitleableFunction': 'MinimumEarnings', "startDate": "2022-01-01", "endDate": "2022-12-31" },
-    { 'manager': 'joe', 'legalEntityID': 1003, 'entitleableFunction': 'MinimumEarnings', "startDate": "2022-01-01", "endDate": "2022-12-31" }
+    { 'manager': 'paula', 'legalEntityID': 1001, 'entitleableFunction': 'EarningsDemo', "startDate": "2022-01-01", "endDate": "2022-12-31" },
+    { 'manager': 'joe', 'legalEntityID': 1003, 'entitleableFunction': 'EarningsDemo', "startDate": "2022-01-01", "endDate": "2022-12-31" }
 ]
 
 class Relationship(BaseModel):
@@ -45,11 +45,11 @@ async def getFRRelationships(fr: str, entitleableFunction: str = Query(), isOffi
     return JSONResponse(content = jsonable_encoder(filteredData))
 
 ENTITLEABLE_FUNCTION_DATA = [
-    { "affiliate": "joe", "entitleableFunction": "MinimumEarnings" }, 
+    { "affiliate": "joe", "entitleableFunction": "EarningsDemo" }, 
     { "affiliate": "joe", "entitleableFunction": "PreDistribution" },
-    { 'affiliate': 'henrietta', 'entitleableFunction': 'MinimumEarnings' },
-    { 'affiliate': 'paula', 'entitleableFunction': 'MinimumEarnings' },
-    { 'affiliate': 'scott', 'entitleableFunction': 'MinimumEarnings' }
+    { 'affiliate': 'henrietta', 'entitleableFunction': 'EarningsDemo' },
+    { 'affiliate': 'paula', 'entitleableFunction': 'EarningsDemo' },
+    { 'affiliate': 'scott', 'entitleableFunction': 'EarningsDemo' }
 ]
 
 @api.get('/entitleableFunction/{fr}')
