@@ -1,13 +1,13 @@
 #! /bin/sh
 
-imageName=relationshipserver-python
+imageName=drsaaron/relationshipserver-python
 imageVersion=0.0.1
 containerName=relationshipServer
 
 docker stop $containerName
 docker rm $containerName
 
-pip3 freeze > requirements.txt
-~/scripts/buildDocker.sh -v $imageVersion -n $imageName -f
+pip3 freeze | grep -v ansible | grep -v pydantic > requirements.txt
+~/shell/buildDocker.sh -v $imageVersion -n $imageName -f
 
-docker run -d --name $containerName --network opademo -p 25001:25001 $imageName:$imageVersion
+docker run -d --name $containerName --network host -p 25001:25001 $imageName:$imageVersion
