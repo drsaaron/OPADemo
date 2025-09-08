@@ -43,7 +43,7 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
     private OpaHttpClient opaClient;
 
     @Override
-    public AuthorizationDecision check(Supplier<Authentication> authentication, RequestAuthorizationContext object) {
+    public AuthorizationDecision authorize(Supplier<Authentication> authentication, RequestAuthorizationContext object) {
         // package up the request method, path and JWT to send to OPA
         HttpServletRequest request = object.getRequest();
         String method = request.getMethod();
