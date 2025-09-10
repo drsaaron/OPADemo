@@ -57,6 +57,10 @@ async def getEntitleableFunctions(fr: str):
     data = list(filter(lambda e: e['affiliate'] == fr, ENTITLEABLE_FUNCTION_DATA))
     return  JSONResponse(content = data)
 
+@api.get('/health')
+async def healthCheck():
+    return JSONResponse(content = { "status": "OK" })
+
 # start 'er up the python way
 if __name__ == "__main__":
     uvicorn.run("__main__:api", reload = True, port=25001, host="0.0.0.0")
