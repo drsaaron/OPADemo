@@ -59,5 +59,5 @@ async def getEntitleableFunctions(fr: str):
 
 # start 'er up the python way
 if __name__ == "__main__":
-    uvicorn.run("__main__:api", reload = True, port=25001)
+    uvicorn.run("__main__:api", reload = True, port=25001, host="0.0.0.0")
     

@@ -13,4 +13,4 @@ perl -i -pe 's/pydantic_core==2.39.0/pydantic_core==2.33.2/' requirements.txt
 
 ~/shell/buildDocker.sh -v $imageVersion -n $imageName -f
 
-docker run -d --name $containerName --network host -p 25001:25001 $imageName:$imageVersion
+docker run -d --name $containerName --network opademo -p 25001:25001 $imageName:$imageVersion
