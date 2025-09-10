@@ -28,6 +28,9 @@ class Relationship(BaseModel):
     startDate: str
     endDate: str = None
 
+class HealthStatus(BaseModel):
+    status: str
+    
 api = FastAPI(description = "python version of the relationship server", version = "0.0.1")
 
 @api.get("/relationships", description = "get all values")
@@ -58,7 +61,7 @@ async def getEntitleableFunctions(fr: str):
     return  JSONResponse(content = data)
 
 @api.get('/health')
-async def healthCheck():
+async def healthCheck() -> HealthStatus:
     return JSONResponse(content = { "status": "OK" })
 
 # start 'er up the python way
