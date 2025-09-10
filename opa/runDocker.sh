@@ -18,5 +18,5 @@ ip=$(ifconfig |grep inet | grep $ipfilter | $filtercomm -1 | awk '{ print $2 }')
 
 # run the docker image with the desired rego.  We can run with all regos in this directory (just put the directory name), but that seems to require
 # docker to restart each time we run, which isn't good for this demo purpose
-docker run -d --name $containerName --add-host relationshipServer:$ip -v `pwd`:/work/data -p 8181:8181 $imageName run --server --addr :8181 /work/data/$rego
+docker run -d --name $containerName --network opademo -v `pwd`:/work/data -p 8181:8181 $imageName run --server --addr :8181 /work/data/$rego
 
