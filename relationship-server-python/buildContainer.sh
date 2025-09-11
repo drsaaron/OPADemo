@@ -1,7 +1,7 @@
 #! /bin/sh
 
 imageName=drsaaron/relationshipserver-python
-imageVersion=0.0.2
+imageVersion=0.0.3
 containerName=relationshipServer
 
 docker stop $containerName
