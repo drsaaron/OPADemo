@@ -86,10 +86,10 @@ public class EarningsDataAPI {
                             schema = @Schema(implementation = EarningsFailure.class))
                 })
     })
-    public Optional<EarningsFailure> getFailure(@PathVariable int legalEntityID, HttpServletRequest request) {
+    public EarningsFailure getFailure(@PathVariable int legalEntityID, HttpServletRequest request) {
         log.info("getting failure for {}", legalEntityID);
         Optional<EarningsFailure> failure = dal.getFailure(legalEntityID, getEntitledRelationships(request));
-        return failure;
+        return failure.orElse(null);
     }
 
     @InitBinder

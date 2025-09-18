@@ -4,13 +4,14 @@
  */
 package com.blazartech.dataapidemo.controller;
 
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.text.SimpleDateFormat;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 /**
  *
@@ -22,9 +23,10 @@ public class DateFormatterConfiguration {
     private static final String DATE_FORMAT = "yyyy-MM-dd";
     
     @Bean
-    public ObjectMapper objectMapper(Jackson2ObjectMapperBuilder builder) {
-        ObjectMapper mapper = builder
-                .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+    public ObjectMapper objectMapper() {
+        JsonMapper mapper = JsonMapper.builder()
+                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+                .disable(MapperFeature.REQUIRE_HANDLERS_FOR_JAVA8_OPTIONALS)
                 .build();
         mapper.setDateFormat(new SimpleDateFormat(DATE_FORMAT));
         mapper.registerModule(new JavaTimeModule());
