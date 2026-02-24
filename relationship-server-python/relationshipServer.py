@@ -38,7 +38,7 @@ async def getAllRelationships() -> list[Relationship]:
     return JSONResponse(jsonable_encoder(RELATIONSHIP_DATA))
 
 @api.get("/relationships/{fr}", description = "get values for one FR")
-async def getFRRelationships(fr: str, entitleableFunction: str = Query(), officeUser = Query(False)) -> list[Relationship]:
+async def getFRRelationships(fr: str, entitleableFunction: str = Query(), officeUser: bool = Query(False)) -> list[Relationship]:
     print("getting FR relationships for " + fr + ", officeUser = " + str(officeUser))
     filteredData = []
     if (officeUser):
