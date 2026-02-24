@@ -4,14 +4,7 @@
  */
 package com.blazartech.dataapidemo.security;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.List;
 import java.util.function.Supplier;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +17,9 @@ import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 import org.springframework.stereotype.Component;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.node.ObjectNode;
 
 /**
  *
@@ -40,10 +36,10 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
     private ObjectMapper objectMapper;
 
     @Autowired
-    private OpaHttpClient opaClient;
+    private OpaHttpClientImpl opaClient;
 
     @Override
-    public AuthorizationDecision authorize(Supplier<Authentication> authentication, RequestAuthorizationContext object) {
+    public AuthorizationDecision authorize(Supplier<? extends Authentication> authentication, RequestAuthorizationContext object) {
         // package up the request method, path and JWT to send to OPA
         HttpServletRequest request = object.getRequest();
         String method = request.getMethod();
@@ -56,12 +52,12 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
         if (authorizationHeader != null) {
             jwt = authorizationHeader.split("\\s+")[1];
         }
-        
+
         int fr = -1;
         if (path.matches("/failures/.*")) {
             log.info("found match for FR call");
             fr = Integer.parseInt(path.replace("/failures/", ""));
-        } 
+        }
 
         ObjectNode requestNode = objectMapper.createObjectNode();
         requestNode.set(
@@ -79,32 +75,23 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
             log.info("OPA request: \n" + jsonRequest);
 
             // send request to OPA
-            JsonNode response = opaClient.sendOpaRequest(opaUrl, jsonRequest.toString());
+            OpaResponse response = opaClient.sendOpaRequest(opaUrl, jsonRequest.toString());
             log.info("OPA response: \n" + response);
 
             // If access to resource API is allowed
-            if (response.findValue("allow").asBoolean()) {
+            if (response.isAllowed()) {
 
-                JsonNode filterListJson = response.findValue("filter_list");
-                ObjectReader reader = objectMapper.readerFor(new TypeReference<List<EntitledRelationship>>() {
-                });
+                List<EntitledRelationship> filterList = response.getFilterList();
 
-                try {
-                    List<EntitledRelationship> filterList = reader.readValue(filterListJson);
-                    
-                    // save the list of entitled relationships to the request session for use in DAL
-                    object.getRequest().getSession().setAttribute("filteredList", filterList);
-                } catch (IOException e) {
-                    log.error("Error building list for filtering: " + e.getMessage(), e);
-                    return new AuthorizationDecision(false);
-                }
+                // save the list of entitled relationships to the request session for use in DAL
+                object.getRequest().getSession().setAttribute("filteredList", filterList);
                 return new AuthorizationDecision(true);
             }
 
             // If access to resource API is not allowed
             return new AuthorizationDecision(false);
 
-        } catch (JsonProcessingException | JSONException e) {
+        } catch (JacksonException | JSONException e) {
             log.error("Error building OPA request \n");
             return new AuthorizationDecision(false);
 

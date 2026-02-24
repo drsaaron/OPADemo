@@ -6,17 +6,17 @@ package com.blazartech.dataapidemo.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestClient;
 
 /**
  *
  * @author aar1069
  */
 @Configuration
-public class RestTemplateConfiguration {
+public class RestClientConfiguration {
     
     @Bean
-    public RestTemplate opaRestTemplate() {
-        return new RestTemplate();
+    public RestClient opaRestClient() {
+        return RestClient.create();
     }
 }

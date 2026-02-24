@@ -5,6 +5,7 @@
 package com.blazartech.dataapidemo.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.security.autoconfigure.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authorization.AuthorizationManager;
@@ -38,4 +39,8 @@ public class SecurityConfiguration {
 
     }
 
+    @Bean
+    public SecurityProperties securityProperties() {
+        return new SecurityProperties();
+    }
 }
