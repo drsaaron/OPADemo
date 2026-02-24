@@ -36,7 +36,7 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
     private ObjectMapper objectMapper;
 
     @Autowired
-    private OpaHttpClientImpl opaClient;
+    private OpaHttpClient opaClient;
 
     @Override
     public AuthorizationDecision authorize(Supplier<? extends Authentication> authentication, RequestAuthorizationContext object) {
