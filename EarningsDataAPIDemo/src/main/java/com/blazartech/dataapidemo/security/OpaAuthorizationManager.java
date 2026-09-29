@@ -4,6 +4,7 @@
  */
 package com.blazartech.dataapidemo.security;
 
+import com.blazartech.dataapidemo.data.EntitledRelationship;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.function.Supplier;

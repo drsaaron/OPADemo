@@ -4,7 +4,6 @@
  */
 package com.blazartech.dataapidemo.data;
 
-import com.blazartech.dataapidemo.security.EntitledRelationship;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;

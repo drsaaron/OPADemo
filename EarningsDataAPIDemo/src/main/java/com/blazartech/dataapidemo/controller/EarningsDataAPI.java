@@ -5,7 +5,7 @@
 package com.blazartech.dataapidemo.controller;
 
 import com.blazartech.dataapidemo.data.EarningsFailure;
-import com.blazartech.dataapidemo.security.EntitledRelationship;
+import com.blazartech.dataapidemo.data.EntitledRelationship;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Info;

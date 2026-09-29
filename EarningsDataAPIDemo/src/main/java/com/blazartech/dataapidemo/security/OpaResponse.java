@@ -4,6 +4,7 @@
  */
 package com.blazartech.dataapidemo.security;
 
+import com.blazartech.dataapidemo.data.EntitledRelationship;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import lombok.Data;
