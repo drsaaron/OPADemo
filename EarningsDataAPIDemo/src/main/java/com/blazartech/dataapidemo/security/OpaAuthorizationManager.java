@@ -73,7 +73,7 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
             return new AuthorizationDecision(false);
 
         } catch (JacksonException e) {
-            log.error("Error building OPA request \n");
+            log.error("Error processing OPA request: " + e.getMessage(), e);
             return new AuthorizationDecision(false);
 
         }
