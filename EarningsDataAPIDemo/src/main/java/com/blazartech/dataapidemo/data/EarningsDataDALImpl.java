@@ -40,14 +40,14 @@ public class EarningsDataDALImpl implements EarningsDataDAL {
     public Predicate<EarningsFailure> getEntitledRelationshipFilter(List<EntitledRelationship> entitledRelationships) {
         return f -> {            
             // legal entity ID must match
-            Predicate<EntitledRelationship> legalEntityMatch = r -> f.getLegalEntityID() == r.getLegalEntityID();
+            Predicate<EntitledRelationship> legalEntityMatch = r -> f.legalEntityID() == r.legalEntityID();
             
             // start date before on on the effective date
-            Predicate<EntitledRelationship> startDateCheck = r -> r.getStartDate().compareTo(f.getEffectiveDate()) <= 0;
+            Predicate<EntitledRelationship> startDateCheck = r -> r.startDate().compareTo(f.effectiveDate()) <= 0;
             
             // end date is null or on/after the effective date
-            Predicate<EntitledRelationship> endDateNullCheck = r -> r.getEndDate() == null;
-            Predicate<EntitledRelationship> endDateAfterCheck = r -> r.getEndDate().compareTo(f.getEffectiveDate()) >= 0;
+            Predicate<EntitledRelationship> endDateNullCheck = r -> r.endDate() == null;
+            Predicate<EntitledRelationship> endDateAfterCheck = r -> r.endDate().compareTo(f.effectiveDate()) >= 0;
             Predicate<EntitledRelationship> endDateCheck = endDateNullCheck.or(endDateAfterCheck);
             
             // total date check combines the checks on start and end date.
@@ -75,7 +75,7 @@ public class EarningsDataDALImpl implements EarningsDataDAL {
         log.info("getting failure for LE {}", legalEntityID);
         
         Optional<EarningsFailure> failure = getFailures(entitledRelationships).stream()
-                .filter(f -> f.getLegalEntityID() == legalEntityID)
+                .filter(f -> f.legalEntityID() == legalEntityID)
                 .findFirst();
         return failure;
     } 

@@ -10,6 +10,6 @@ package com.blazartech.dataapidemo.security;
  */
 public interface OpaHttpClient {
 
-    OpaResponse sendOpaRequest(String url, String body);
+    OpaResponse sendOpaRequest(String url, OpaRequest body);
     
 }

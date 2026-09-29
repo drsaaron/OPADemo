@@ -5,21 +5,16 @@
 package com.blazartech.dataapidemo.data;
 
 import java.time.LocalDate;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  *
  * @author aar1069
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class EarningsFailure {
-    
-    private int legalEntityID;
-    private String officeNumber;
-    private int failureCount;
-    private LocalDate effectiveDate;
+public record EarningsFailure(
+        int legalEntityID,
+        String officeNumber,
+        int failureCount,
+        LocalDate effectiveDate
+        ) {
+
 }

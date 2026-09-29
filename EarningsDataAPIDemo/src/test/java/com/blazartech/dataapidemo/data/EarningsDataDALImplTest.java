@@ -110,7 +110,7 @@ public class EarningsDataDALImplTest {
         
         Optional<EarningsFailure> result = instance.getFailure(1001, entitledRelationships);
         assertTrue(result.isPresent());
-        assertEquals(1001, result.get().getLegalEntityID());
+        assertEquals(1001, result.get().legalEntityID());
     }
     
     @Test

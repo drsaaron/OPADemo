@@ -8,8 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.function.Supplier;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authorization.AuthorizationDecision;
@@ -18,8 +16,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 import org.springframework.stereotype.Component;
 import tools.jackson.core.JacksonException;
-import tools.jackson.databind.ObjectMapper;
-import tools.jackson.databind.node.ObjectNode;
 
 /**
  *
@@ -31,9 +27,6 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
 
     @Value("${opa.url}")
     private String opaUrl;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Autowired
     private OpaHttpClient opaClient;
@@ -59,23 +52,11 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
             fr = Integer.parseInt(path.replace("/failures/", ""));
         }
 
-        ObjectNode requestNode = objectMapper.createObjectNode();
-        requestNode.set(
-                "input",
-                objectMapper.valueToTree(
-                        OpaRequestBuilder.builder()
-                                .method(method)
-                                .path(path)
-                                .encodedJwt(jwt)
-                                .fr(fr)
-                                .build()));
-
         try {
-            JSONObject jsonRequest = new JSONObject(objectMapper.writeValueAsString(requestNode));
-            log.info("OPA request: \n" + jsonRequest);
 
             // send request to OPA
-            OpaResponse response = opaClient.sendOpaRequest(opaUrl, jsonRequest.toString());
+            OpaRequest opaRequest = new OpaRequest(new OpaRequestData(method, path, jwt, fr));
+            OpaResponse response = opaClient.sendOpaRequest(opaUrl, opaRequest);
             log.info("OPA response: \n" + response);
 
             // If access to resource API is allowed
@@ -91,7 +72,7 @@ public class OpaAuthorizationManager implements AuthorizationManager<RequestAuth
             // If access to resource API is not allowed
             return new AuthorizationDecision(false);
 
-        } catch (JacksonException | JSONException e) {
+        } catch (JacksonException e) {
             log.error("Error building OPA request \n");
             return new AuthorizationDecision(false);
 

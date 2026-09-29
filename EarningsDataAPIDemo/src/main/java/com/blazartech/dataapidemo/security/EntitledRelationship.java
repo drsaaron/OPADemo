@@ -5,23 +5,16 @@
 package com.blazartech.dataapidemo.security;
 
 import java.time.LocalDate;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
 /**
  *
  * @author aar1069
  */
-@Data
-@AllArgsConstructor
-public class EntitledRelationship {
-    
-    public EntitledRelationship() {
-    }
+public record EntitledRelationship(
+        int legalEntityID,
+        LocalDate startDate,
+        LocalDate endDate,
+        String entitleableFunction,
+        String manager) {
 
-    private int legalEntityID;
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private String entitleableFunction;
-    private String manager;
 }

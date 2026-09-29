@@ -4,19 +4,14 @@
  */
 package com.blazartech.dataapidemo.security;
 
-import lombok.Builder;
-import lombok.Data;
-
 /**
  *
  * @author aar1069
  */
-@Data
-@Builder
-public class OpaRequestBuilder {
+public record OpaRequestData(
+        String method,
+        String path,
+        String encodedJwt,
+        int fr) {
 
-    private String method;
-    private String path;
-    private String encodedJwt;
-    private int fr;
 }

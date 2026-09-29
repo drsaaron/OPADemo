@@ -23,8 +23,9 @@ public class OpaHttpClientImpl implements OpaHttpClient {
     private RestClient opaRestClient;
 
     @Override
-    public OpaResponse sendOpaRequest(String url, String body) {
+    public OpaResponse sendOpaRequest(String url, OpaRequest body) {
         
+        log.info("OPA request ={}", body);
         ResponseSpec spec = opaRestClient.post()
                 .uri(url)
                 .body(body)
